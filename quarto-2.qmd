@@ -2,5 +2,58 @@
 title: "Quarto-2"
 format: html
 author: Anthony Gao
+execute:
+  echo: false
 ---
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+```{r}
+#| label: fig-mpg
+#| fig-cap: "Relationship between Engine Displacement and Highway Mileage"
+#| warning: false
+#| message: false
+
+library(ggplot2)
+library(dplyr)
+
+# Create a clean, modern scatter plot with trend lines
+ggplot(mpg, aes(x = displ, y = hwy, color = drv, fill = drv)) +
+  geom_jitter(size = 3, alpha = 0.6, width = 0.1, height = 0.1) +
+  geom_smooth(method = "lm", formula = y ~ x, se = TRUE, alpha = 0.15, linewidth = 1.2) +
+  scale_color_manual(
+    values = c("4" = "#2A9D8F", "f" = "#E76F51", "r" = "#F4A261"),
+    labels = c("4" = "4-Wheel Drive", "f" = "Front-Wheel Drive", "r" = "Rear-Wheel Drive")
+  ) +
+  scale_fill_manual(
+    values = c("4" = "#2A9D8F", "f" = "#E76F51", "r" = "#F4A261"),
+    labels = c("4" = "4-Wheel Drive", "f" = "Front-Wheel Drive", "r" = "Rear-Wheel Drive")
+  ) +
+  labs(
+    title = "Fuel Efficiency vs. Engine Size",
+    subtitle = "Analysis of highway mileage (mpg) across different drive trains",
+    x = "Engine Displacement (L)",
+    y = "Highway Fuel Economy (mpg)",
+    color = "Drive Train",
+    fill = "Drive Train",
+    caption = "Data Source: EPA (mpg dataset)"
+  ) +
+  theme_minimal(base_family = "sans") +
+  theme(
+    plot.title = element_text(face = "bold", size = 16, color = "#2B2D42", margin = margin(b = 6)),
+    plot.subtitle = element_text(size = 12, color = "#6C757D", margin = margin(b = 15)),
+    plot.caption = element_text(size = 9, color = "#ADB5BD", margin = margin(t = 15)),
+    axis.title.x = element_text(size = 11, face = "bold", margin = margin(t = 10)),
+    axis.title.y = element_text(size = 11, face = "bold", margin = margin(r = 10)),
+    axis.text = element_text(size = 10, color = "#495057"),
+    legend.position = "top",
+    legend.title = element_text(face = "bold", size = 10),
+    legend.text = element_text(size = 10),
+    panel.grid.major = element_line(color = "#E9ECEF"),
+    panel.grid.minor = element_blank(),
+    plot.margin = margin(20, 20, 20, 20)
+  )
+```
 
